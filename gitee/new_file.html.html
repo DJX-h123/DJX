@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱心动画效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 118, 140, 0.3);
+        }
+        
+        .subtitle {
+            margin-bottom: 40px;
+            color: #a0a0c0;
+            font-size: 1.1rem;
+        }
+        
+        .hearts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .heart-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .heart-section:hover {
+            transform: translateY(-10px);
+        }
+        
+        .heart-title {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #ff7eb3;
+        }
+        
+        /* 经典跳动爱心 */
+        .heart-classic {
+            width: 100px;
+            height: 90px;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        .heart-classic:before,
+        .heart-classic:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 52px;
+            height: 80px;
+            border-radius: 50px 50px 0 0;
+            background: #ff4757;
+        }
+        
+        .heart-classic:before {
+            left: 50px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart-classic:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        /* 渐变爱心 */
+        .heart-gradient {
+            width: 100px;
+            height: 90px;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .heart-gradient:before,
+        .heart-gradient:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 52px;
+            height: 80px;
+            border-radius: 50px 50px 0 0;
+            background: linear-gradient(45deg, #ff7eb3, #ff758c);
+        }
+        
+        .heart-gradient:before {
+            left: 50px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart-gradient:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        /* 3D爱心 */
+        .heart-3d {
+            width: 100px;
+            height: 90px;
+            margin: 0 auto 20px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3d 8s infinite linear;
+        }
+        
+        .heart-3d:before,
+        .heart-3d:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 52px;
+            height: 80px;
+            border-radius: 50px 50px 0 0;
+            background: #ff6b81;
+            box-shadow: 0 0 20px rgba(255, 107, 129, 0.7);
+        }
+        
+        .heart-3d:before {
+            left: 50px;
+            transform: rotate(-45deg) translateZ(10px);
+            transform-origin: 0 100%;
+        }
+        
+        .heart-3d:after {
+            left: 0;
+            transform: rotate(45deg) translateZ(10px);
+            transform-origin: 100% 100%;
+        }
+        
+        /* 动画定义 */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.1); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes rotate3d {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .heart-description {
+            color: #c0c0e0;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 3px solid transparent;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        
+        button {
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 118, 140, 0.3);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hearts-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .heart-section {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>❤️ 爱心代码展示 ❤️</h1>
+        <p class="subtitle">使用纯CSS绘制的多种爱心效果，点击下方按钮可改变颜色</p>
+        
+        <div class="hearts-container">
+            <div class="heart-section">
+                <h3 class="heart-title">经典跳动爱心</h3>
+                <div class="heart-classic" id="heart1"></div>
+                <p class="heart-description">使用CSS伪元素创建的心形，带有心跳动画效果，模拟真实心脏跳动。</p>
+            </div>
+            
+            <div class="heart-section">
+                <h3 class="heart-title">渐变悬浮爱心</h3>
+                <div class="heart-gradient" id="heart2"></div>
+                <p class="heart-description">带有渐变色彩的爱心，上下浮动动画营造梦幻视觉效果。</p>
+            </div>
+            
+            <div class="heart-section">
+                <h3 class="heart-title">3D旋转爱心</h3>
+                <div class="heart-3d" id="heart3"></div>
+                <p class="heart-description">使用3D变换效果的爱心，持续旋转展示立体感。</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <h3>自定义爱心颜色</h3>
+            <div class="color-picker">
+                <div class="color-option active" style="background-color: #ff4757;" data-color="#ff4757"></div>
+                <div class="color-option" style="background-color: #ff6b81;" data-color="#ff6b81"></div>
+                <div class="color-option" style="background-color: #ffa502;" data-color="#ffa502"></div>
+                <div class="color-option" style="background-color: #2ed573;" data-color="#2ed573"></div>
+                <div class="color-option" style="background-color: #1e90ff;" data-color="#1e90ff"></div>
+                <div class="color-option" style="background-color: #9c88ff;" data-color="#9c88ff"></div>
+                <div class="color-option" style="background-color: #e84393;" data-color="#e84393"></div>
+                <div class="color-option" style="background-color: #00d2d3;" data-color="#00d2d3"></div>
+            </div>
+            <button id="randomColor">随机颜色</button>
+        </div>
+        
+        <div class="footer">
+            <p>❤️ 爱心代码由HTML+CSS实现 | 无需JavaScript也可运行基本效果 ❤️</p>
+            <p>注：颜色切换功能需要JavaScript支持</p>
+        </div>
+    </div>
+
+    <script>
+        // 颜色选择功能
+        const colorOptions = document.querySelectorAll('.color-option');
+        const hearts = document.querySelectorAll('[class*="heart-"]');
+        const randomColorBtn = document.getElementById('randomColor');
+        
+        // 预定义一些漂亮的颜色
+        const colorPalette = [
+            '#ff4757', '#ff6b81', '#ffa502', '#2ed573',
+            '#1e90ff', '#9c88ff', '#e84393', '#00d2d3',
+            '#ff9ff3', '#f368e0', '#00cec9', '#fd79a8'
+        ];
+        
+        // 颜色选择器事件
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // 移除所有active类
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                // 为当前选项添加active类
+                this.classList.add('active');
+                
+                // 获取颜色值
+                const color = this.getAttribute('data-color');
+                
+                // 更新所有爱心颜色
+                updateHeartColors(color);
+            });
+        });
+        
+        // 随机颜色按钮事件
+        randomColorBtn.addEventListener('click', function() {
+            // 随机选择一个颜色
+            const randomColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+            
+            // 更新所有爱心颜色
+            updateHeartColors(randomColor);
+            
+            // 更新颜色选择器
+            colorOptions.forEach(option => {
+                option.classList.remove('active');
+                if(option.getAttribute('data-color') === randomColor) {
+                    option.classList.add('active');
+                }
+            });
+        });
+        
+        // 更新爱心颜色函数
+        function updateHeartColors(color) {
+            hearts.forEach(heart => {
+                // 检查爱心类型并应用颜色
+                if(heart.classList.contains('heart-classic') || heart.classList.contains('heart-3d')) {
+                    // 对于经典爱心和3D爱心
+                    const beforeElement = heart;
+                    const afterElement = heart;
+                    
+                    // 创建新的样式规则
+                    const styleId = 'dynamic-heart-color';
+                    let styleElement = document.getElementById(styleId);
+                    
+                    if (!styleElement) {
+                        styleElement = document.createElement('style');
+                        styleElement.id = styleId;
+                        document.head.appendChild(styleElement);
+                    }
+                    
+                    // 更新样式
+                    styleElement.textContent = `
+                        .heart-classic:before, .heart-classic:after {
+                            background: ${color} !important;
+                        }
+                        .heart-3d:before, .heart-3d:after {
+                            background: ${color} !important;
+                            box-shadow: 0 0 20px ${color}80 !important;
+                        }
+                    `;
+                    
+                } else if(heart.classList.contains('heart-gradient')) {
+                    // 对于渐变爱心，创建一个相近的渐变
+                    const colorRgb = hexToRgb(color);
+                    const lighterColor = adjustColor(colorRgb, 30);
+                    const gradientColor = `linear-gradient(45deg, ${color}, ${lighterColor})`;
+                    
+                    const styleId = 'dynamic-gradient-color';
+                    let styleElement = document.getElementById(styleId);
+                    
+                    if (!styleElement) {
+                        styleElement = document.createElement('style');
+                        styleElement.id = styleId;
+                        document.head.appendChild(styleElement);
+                    }
+                    
+                    styleElement.textContent = `
+                        .heart-gradient:before, .heart-gradient:after {
+                            background: ${gradientColor} !important;
+                        }
+                    `;
+                }
+            });
+        }
+        
+        // 辅助函数：将十六进制颜色转换为RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        // 辅助函数：调整颜色亮度
+        function adjustColor(rgb, percent) {
+            const r = Math.min(255, Math.max(0, rgb.r + percent));
+            const g = Math.min(255, Math.max(0, rgb.g + percent));
+            const b = Math.min(255, Math.max(0, rgb.b + percent));
+            
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+    </script>
+</body>
+</html>
